@@ -15,7 +15,7 @@ public class DebtReducer extends Reducer<Text, DoubleWritable, Text, DoubleWrita
 	public void reduce(Text key, Iterable<DoubleWritable> values, Context context) throws IOException, InterruptedException {
 		int count = 0;
 		double total = 0;
-		double avg = 0;
+		double avg;
 
 		for (DoubleWritable value : values) {
 			total += value.get();

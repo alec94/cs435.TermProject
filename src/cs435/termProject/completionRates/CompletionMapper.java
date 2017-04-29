@@ -17,7 +17,7 @@ public class CompletionMapper extends Mapper<LongWritable, Text, Text, Text> {
 			return;
 		} else {
 			String[] path = ((FileSplit) context.getInputSplit()).getPath().getName().split("/");
-			String year = path[path.length - 1].substring(6, 13).replace("_","-");
+			String year = path[path.length - 1].substring(6, 13).replace("_", "-");
 
 			String[] split = value.toString().split(",");
 

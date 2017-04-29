@@ -1,6 +1,8 @@
 package cs435.termProject;
 
 import cs435.termProject.completionRates.CompletionDriver;
+import cs435.termProject.debtPerInstitution.DebtDriver;
+import cs435.termProject.degreeTypeRTI.RTIDriver;
 import org.apache.hadoop.fs.Path;
 
 import java.io.IOException;
@@ -18,8 +20,9 @@ public class Main {
 
 		Path input = new Path(args[0]);
 
-		//DebtDriver.run(new Path(args[0]), new Path(args[1] + "/debt"));
+		DebtDriver.run(new Path(args[0]), new Path(args[1] + "/debt"));
 		CompletionDriver.run(input, new Path(args[1] + "/comp"));
+		RTIDriver.run(input, new Path(args[1] + "/degreeRTI"));
 
 	}
 }
