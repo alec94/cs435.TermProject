@@ -1,14 +1,7 @@
 package cs435.termProject;
 
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FileSystem;
+import cs435.termProject.completionRates.CompletionDriver;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.NullWritable;
-import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapreduce.Job;
-import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
-import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
-import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 import java.io.IOException;
 
@@ -23,29 +16,11 @@ public class Main {
 			System.exit(-1);
 		}
 
-		System.exit(run(new Path(args[0]), new Path(args[1])));
-	}
+		Path input = new Path(args[0]);
 
-	private static int run(Path input, Path output) throws IOException, ClassNotFoundException, InterruptedException {
+		//DebtDriver.run(new Path(args[0]), new Path(args[1] + "/debt"));
+		CompletionDriver.run(input, new Path(args[1] + "/comp"));
 
-		Configuration configuration = new Configuration();
-		FileSystem fileSystem = FileSystem.get(configuration);
-
-		Job job = Job.getInstance(configuration);
-		job.setJarByClass(Main.class);
-		//job.setMapperClass(HBaseMapper.class); TODO: set correct mapper
-		//job.setReducerClass(HBaseReducer.class); TODO: set correct reducer
-		job.setInputFormatClass(TextInputFormat.class);
-		job.setOutputKeyClass(NullWritable.class);
-		job.setOutputValueClass(Text.class);
-		FileInputFormat.addInputPath(job, input);
-		FileOutputFormat.setOutputPath(job, output);
-
-		if (fileSystem.exists(output)) {
-			fileSystem.delete(output, true);
-		}
-
-		return (job.waitForCompletion(true) ? 1 : 0);
 	}
 }
 
